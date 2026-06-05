@@ -18,6 +18,17 @@ export default function CurrentWeather({ data, units, locationName }: Props) {
   const c = data.current;
   const windLabel = units === "metric" ? "km/h" : "mph";
 
+  const tempLabel = units === "metric" ? "°C" : "°F";
+  const parsedTemp = Number(c.temperature);
+  const displayTemp = units === "imperial" 
+    ? Math.round((parsedTemp * 9) / 5 + 32) 
+    : Math.round(parsedTemp);
+
+  const parsedWind = Number(c.wind_speed);
+  const displayWindSpeed = units === "imperial"
+    ? Math.round(parsedWind * 0.621371) 
+    : Math.round(parsedWind);
+
   const cityFallback = data.location?.timezone 
     ? data.location.timezone.split("/")[1].replace("_", " ") 
     : "Your location";
@@ -52,7 +63,7 @@ export default function CurrentWeather({ data, units, locationName }: Props) {
     { 
       icon: <Wind size={18} className="text-teal-400" />, 
       label: "Wind Speed", 
-      value: c.wind_speed !== undefined ? `${c.wind_speed} ${windLabel}` : "--" 
+      value: c.wind_speed !== undefined ? `${displayWindSpeed} ${windLabel}` : "--"
     },
     { 
       icon: <Navigation size={18} className="text-emerald-400" style={{ transform: `rotate(${c.wind_direction ?? 0}deg)` }} />, 
@@ -87,7 +98,7 @@ export default function CurrentWeather({ data, units, locationName }: Props) {
       {/* Main Temperature Hero */}
       <div className="flex items-baseline gap-1 mb-6">
         <span className="text-6xl font-extrabold tracking-tighter">
-          {formatTemp(c.temperature)}
+         {displayTemp}{tempLabel}
         </span>
       </div>
 
