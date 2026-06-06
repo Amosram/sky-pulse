@@ -30,7 +30,7 @@ A sleek, real-time weather app built with **Next.js 15**, **TypeScript**, and **
 
 ```bash
 git clone https://github.com/Amosram/sky-pulse.git
-cd skypulse-weather
+cd sky-pulse
 ```
 
 ### 2. Install dependencies
